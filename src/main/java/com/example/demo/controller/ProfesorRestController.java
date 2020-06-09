@@ -24,18 +24,17 @@ public class ProfesorRestController {
 	
 	@GetMapping("/profesores")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Profesor> getProfesores() {
+	public List<Profesor> getProfesores(){
 		return profesorService.findAll();
 	}
 	
-	@PostMapping("/find_professor")
-	public ResponseEntity<?> findProfesor(@RequestBody Profesor profesor){
-		Profesor profesorDb = profesorService.findProfesor(profesor);
-		if(profesorDb!=null) {
+	@PostMapping("/sign_up")
+	public ResponseEntity<Void> addProfesor(@RequestBody Profesor profesor){
+		if(profesorService.findProfesor(profesor)==null) {
 			profesorService.save(profesor);
-			return new ResponseEntity<>(profesorDb, HttpStatus.OK);
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		}else {
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 	}
 	
