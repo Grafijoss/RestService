@@ -25,6 +25,8 @@ public interface IProfesorService {
 	
 	public void deleteProfesor(Long id);
 	
+	public void deleteAllProfesor();
+	
 	public Profesor findById(Long id);
 	
 	public Profesor findByIdSQL(Long id);
