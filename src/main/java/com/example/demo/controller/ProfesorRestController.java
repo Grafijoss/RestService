@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Profesor;
+import com.example.demo.mapper.Mapper;
+import com.example.demo.model.MProfesor;
 import com.example.demo.service.IProfesorService;
 
 @RestController
@@ -53,10 +56,13 @@ public class ProfesorRestController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> loginProfesor(@RequestBody Profesor profesor) {
-		Profesor prpfesorDb = null;
-		prpfesorDb = profesorService.checkProfesorLogin(profesor);
+		Profesor prpfesorDb =  profesorService.checkProfesorLogin(profesor);
 		if (prpfesorDb != null) {
-			return new ResponseEntity<>(prpfesorDb, HttpStatus.OK);
+			List<Profesor> profesores = new ArrayList<>();
+			profesores.add(prpfesorDb);
+			List<MProfesor> mProfesores = new ArrayList<>();
+			mProfesores = Mapper.convertirLista(profesores);
+			return new ResponseEntity<>(mProfesores, HttpStatus.OK);
 		}
 		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 	}
