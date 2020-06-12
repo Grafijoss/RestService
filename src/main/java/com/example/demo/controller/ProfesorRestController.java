@@ -51,6 +51,17 @@ public class ProfesorRestController {
 		}
 	}
 	
+	@PostMapping("/login")
+	public ResponseEntity<?> loginProfesor(@RequestBody Profesor profesor) {
+		Profesor prpfesorDb = null;
+		prpfesorDb = profesorService.checkProfesorLogin(profesor);
+		if (prpfesorDb != null) {
+			return new ResponseEntity<>(prpfesorDb, HttpStatus.OK);
+		}
+		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+	}
+	
+	
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> updateProfesor(@PathVariable(value = "id")Long id, @RequestBody Profesor profesor) {
 		Profesor profesorDb = null;
