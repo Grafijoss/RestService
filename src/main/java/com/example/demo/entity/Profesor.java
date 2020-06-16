@@ -3,7 +3,9 @@ package com.example.demo.entity;
 import javax.persistence.Entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,82 +45,70 @@ public class Profesor implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
 	
+	public List<Curso> getCurso() {
+		return curso;
+	}
+
+	public void setCurso(List<Curso> curso) {
+		this.curso = curso;
+	}
+
 	@PrePersist
 	public void prePersist() {
 		createAt = new Date();
 	}
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "profesor_id", referencedColumnName="id")
+	private List<Curso> curso = new ArrayList<>();
 
 	public Long getId() {
 		return id;
 	}
 
-
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
 
 	public String getNombre() {
 		return nombre;
 	}
 
-
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
 
 	public String getPassword() {
 		return password;
 	}
 
-
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
 
 	public String getFoto() {
 		return foto;
 	}
 
-
-
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
-
-
 
 	public Date getCreateAt() {
 		return createAt;
 	}
 
-
-
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
-
-
 
 	private static final long serialVersionUID = 1L;
 }
